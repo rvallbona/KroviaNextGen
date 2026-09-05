@@ -253,41 +253,91 @@
     }
   };
 
-  /* ============ CANVAS ============ */
-  const canvas = $('#neural-canvas');
-  if (canvas && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    const ctx = canvas.getContext('2d');
-    let w, h, pts = [], raf;
-    const C = ['168,85,247', '34,211,238', '52,245,197'];
-    function resize() {
-      w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight;
-      pts = Array.from({ length: Math.min(80, Math.round(w * h / 24000)) }, () => ({
-        x: Math.random() * w, y: Math.random() * h,
-        vx: (Math.random() - .5) * .25, vy: (Math.random() - .5) * .25,
-        r: Math.random() * 1.5 + .5, c: C[Math.floor(Math.random() * C.length)]
-      }));
-    }
-    function draw() {
-      ctx.clearRect(0, 0, w, h);
-      for (let i = 0; i < pts.length; i++) {
-        const p = pts[i];
-        p.x += p.vx; p.y += p.vy;
-        if (p.x < 0 || p.x > w) p.vx *= -1;
-        if (p.y < 0 || p.y > h) p.vy *= -1;
-        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.284);
-        ctx.fillStyle = 'rgba(' + p.c + ',.7)'; ctx.fill();
-        for (let j = i + 1; j < pts.length; j++) {
-          const q = pts[j], dx = p.x - q.x, dy = p.y - q.y, d2 = dx * dx + dy * dy;
-          if (d2 < 19000) {
-            ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y);
-            ctx.strokeStyle = 'rgba(' + p.c + ',' + (.14 * (1 - d2 / 19000)) + ')';
-            ctx.lineWidth = 1; ctx.stroke();
-          }
+  /* ============ ANIMACIONES DE INTERFAZ ============ */
+  /* El fondo animado vive en background.js, los estilos en theme.js */
+  const noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* barra de progreso de lectura */
+  const bar = $('#scrollBar');
+  const onProgress = () => {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.width = (max > 0 ? (window.scrollY / max) * 100 : 0) + '%';
+  };
+  onProgress(); window.addEventListener('scroll', onProgress, { passive: true });
+
+  /* el burger se convierte en X */
+  $('#navBurger').addEventListener('click', function () { this.classList.toggle('is-open'); });
+
+  /* título del hero: cada palabra entra por separado */
+  const title = $('.hero__title');
+  if (title && !noMotion) {
+    const parts = Array.from(title.childNodes);
+    title.textContent = '';
+    let i = 0;
+    parts.forEach(node => {
+      if (node.nodeName === 'BR') { title.appendChild(node); return; }
+      const isEl = node.nodeType === 1;
+      const words = (node.textContent || '').trim().split(/\s+/).filter(Boolean);
+      words.forEach(word => {
+        // la puntuación suelta se pega a la palabra anterior
+        const last = title.lastElementChild;
+        if (/^[.,;:!?]+$/.test(word) && last && last.classList.contains('w')) {
+          last.textContent += word; return;
         }
-      }
-      raf = requestAnimationFrame(draw);
-    }
-    resize(); draw();
-    window.addEventListener('resize', () => { cancelAnimationFrame(raf); resize(); draw(); });
+        const span = document.createElement('span');
+        span.className = 'w' + (isEl ? ' ' + node.className : '');
+        span.textContent = word;
+        span.style.animationDelay = (i++ * 90 + 120) + 'ms';
+        title.appendChild(span);
+      });
+    });
   }
+
+  /* glitch del tema Cyber: necesita el texto duplicado en un atributo */
+  $$('.section__head h2, .final-cta h2').forEach(h => h.setAttribute('data-txt', h.textContent));
+
+  if (!noMotion && window.matchMedia('(pointer:fine)').matches) {
+    /* halo que sigue al cursor */
+    const glow = $('#cursorGlow');
+    let gx = 0, gy = 0, tx = 0, ty = 0, gRaf;
+    document.body.classList.add('has-cursor');
+    window.addEventListener('pointermove', e => { tx = e.clientX; ty = e.clientY; }, { passive: true });
+    (function follow() {
+      gx += (tx - gx) * .09; gy += (ty - gy) * .09;
+      glow.style.transform = 'translate3d(' + gx + 'px,' + gy + 'px,0)';
+      gRaf = requestAnimationFrame(follow);
+    })();
+
+    /* foco de luz dentro de cada tarjeta */
+    $$('.tile').forEach(tile => {
+      tile.addEventListener('pointermove', e => {
+        const r = tile.getBoundingClientRect();
+        tile.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+        tile.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+      });
+    });
+
+    /* botones magnéticos */
+    $$('.btn--lg, .chat-launcher, .theme-dock__toggle').forEach(el => {
+      el.addEventListener('pointermove', e => {
+        const r = el.getBoundingClientRect();
+        const dx = (e.clientX - r.left - r.width / 2) * .22;
+        const dy = (e.clientY - r.top - r.height / 2) * .28;
+        el.style.translate = dx + 'px ' + dy + 'px';
+      });
+      el.addEventListener('pointerleave', () => { el.style.translate = ''; });
+    });
+
+    /* parallax suave de los orbes */
+    const orbs = $$('.orb');
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      orbs.forEach((o, i) => { o.style.translate = '0 ' + (y * (0.04 + i * 0.03)) + 'px'; });
+    }, { passive: true });
+  }
+
+  /* al cambiar de estilo, reanimamos los contadores del hero */
+  document.addEventListener('krovia:theme', () => {
+    $$('.reveal').forEach(el => el.classList.add('is-visible'));
+  });
 })();
