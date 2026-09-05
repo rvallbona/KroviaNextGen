@@ -7,11 +7,9 @@
 <meta name="description" content="Webs, agentes de IA y automatizaciones que atienden, cualifican y venden por ti. Agenda una consulta gratuita." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="assets/css/styles.css" />
-<link rel="stylesheet" href="assets/css/themes.css" />
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
-<script>try{document.documentElement.setAttribute('data-theme',localStorage.getItem('krovia_theme')||'nebula')}catch(e){document.documentElement.setAttribute('data-theme','nebula')}</script>
 </head>
 <body>
 
@@ -20,18 +18,13 @@
 <div class="bg-layer">
   <canvas id="neural-canvas"></canvas>
   <div class="bg-grid"></div>
-  <div class="bg-aurora"></div>
-  <div class="bg-sun"></div>
-  <div class="bg-horizon"></div>
   <div class="orb orb--1"></div>
   <div class="orb orb--2"></div>
   <div class="orb orb--3"></div>
-  <div class="bg-scan"></div>
   <div class="bg-noise"></div>
 </div>
 
 <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
-<div class="theme-flash" id="themeFlash" aria-hidden="true"></div>
 
 <!-- ============ NAV ============ -->
 <header class="nav" id="nav">
@@ -41,7 +34,7 @@
         <svg viewBox="0 0 32 32" aria-hidden="true">
           <path d="M16 2 3 9v14l13 7 13-7V9L16 2Z" fill="none" stroke="url(#g1)" stroke-width="1.6"/>
           <path d="M11 10v12M11 16l8-6M11 16l8 6" fill="none" stroke="url(#g1)" stroke-width="2" stroke-linecap="round"/>
-          <defs><linearGradient id="g1" x1="0" y1="0" x2="32" y2="32"><stop offset="0" stop-color="#C084FC"/><stop offset=".55" stop-color="#22D3EE"/><stop offset="1" stop-color="#34F5C5"/></linearGradient></defs>
+          <defs><linearGradient id="g1" x1="0" y1="0" x2="32" y2="32"><stop offset="0" stop-color="#7FC8FF"/><stop offset=".5" stop-color="#B9DEFF"/><stop offset="1" stop-color="#5AE0C0"/></linearGradient></defs>
         </svg>
       </span>
       <span class="brand__text">Krovia<span>NextGen</span></span>
@@ -54,17 +47,7 @@
       <button class="btn btn--primary btn--sm" data-cta="agenda">Agendar</button>
     </nav>
 
-    <div class="nav__tools">
-      <!-- selector de estilo visual -->
-      <div class="theme-dock" id="themeDock">
-        <button class="theme-dock__toggle" id="themeToggle" aria-label="Cambiar estilo visual" aria-expanded="false">
-          <svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 2-.9 2-2 0-.5-.2-1-.5-1.3-.3-.4-.5-.8-.5-1.2 0-1 .8-1.8 1.8-1.8H17a4 4 0 0 0 4-4c0-4.4-4-8-9-8Z" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="7.5" cy="12" r="1.2" fill="currentColor"/><circle cx="10" cy="7.8" r="1.2" fill="currentColor"/><circle cx="15" cy="8.4" r="1.2" fill="currentColor"/></svg>
-        </button>
-        <div class="theme-dock__list" id="themeList"></div>
-      </div>
-
-      <button class="nav__burger" id="navBurger" aria-label="Menú"><span></span><span></span><span></span></button>
-    </div>
+    <button class="nav__burger" id="navBurger" aria-label="Menú"><span></span><span></span><span></span></button>
   </div>
 </header>
 
@@ -175,7 +158,7 @@
   <div class="container">
     <div class="section__head">
       <span class="eyebrow">Proceso</span>
-      <h2>Tres pasos. <span class="grad">Sin humo</span>.</h2>
+      <h2>Tres <span class="grad">pasos</span>.</h2>
     </div>
 
     <ol class="steps">
@@ -290,7 +273,7 @@
         <svg viewBox="0 0 32 32" aria-hidden="true">
           <path d="M16 2 3 9v14l13 7 13-7V9L16 2Z" fill="none" stroke="url(#g2)" stroke-width="1.6"/>
           <path d="M11 10v12M11 16l8-6M11 16l8 6" fill="none" stroke="url(#g2)" stroke-width="2" stroke-linecap="round"/>
-          <defs><linearGradient id="g2" x1="0" y1="0" x2="32" y2="32"><stop offset="0" stop-color="#C084FC"/><stop offset=".55" stop-color="#22D3EE"/><stop offset="1" stop-color="#34F5C5"/></linearGradient></defs>
+          <defs><linearGradient id="g2" x1="0" y1="0" x2="32" y2="32"><stop offset="0" stop-color="#7FC8FF"/><stop offset=".5" stop-color="#B9DEFF"/><stop offset="1" stop-color="#5AE0C0"/></linearGradient></defs>
         </svg>
       </span>
       <span class="brand__text">Krovia<span>NextGen</span></span>
@@ -341,7 +324,6 @@
 
 <script src="assets/js/config.js"></script>
 <script src="assets/js/background.js"></script>
-<script src="assets/js/theme.js"></script>
 <script src="assets/js/chatbot.js"></script>
 <script src="assets/js/main.js"></script>
 </body>

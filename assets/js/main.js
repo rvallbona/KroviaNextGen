@@ -84,7 +84,7 @@
     js.onload = () => {
       if (!window.Calendly) return;
       window.Calendly.initInlineWidget({
-        url: CFG.calendlyUrl + '?hide_gdpr_banner=1&background_color=0b0616&text_color=f1edfc&primary_color=a855f7',
+        url: CFG.calendlyUrl + '?hide_gdpr_banner=1&background_color=08152b&text_color=dce9ff&primary_color=7fc8ff',
         parentElement: $('#calendlyBox'),
         prefill: prefill || {}
       });
@@ -254,7 +254,7 @@
   };
 
   /* ============ ANIMACIONES DE INTERFAZ ============ */
-  /* El fondo animado vive en background.js, los estilos en theme.js */
+  /* El fondo animado vive en background.js */
   const noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* barra de progreso de lectura */
@@ -293,9 +293,6 @@
     });
   }
 
-  /* glitch del tema Cyber: necesita el texto duplicado en un atributo */
-  $$('.section__head h2, .final-cta h2').forEach(h => h.setAttribute('data-txt', h.textContent));
-
   if (!noMotion && window.matchMedia('(pointer:fine)').matches) {
     /* halo que sigue al cursor */
     const glow = $('#cursorGlow');
@@ -318,7 +315,7 @@
     });
 
     /* botones magnéticos */
-    $$('.btn--lg, .chat-launcher, .theme-dock__toggle').forEach(el => {
+    $$('.btn--lg, .chat-launcher').forEach(el => {
       el.addEventListener('pointermove', e => {
         const r = el.getBoundingClientRect();
         const dx = (e.clientX - r.left - r.width / 2) * .22;
@@ -335,9 +332,4 @@
       orbs.forEach((o, i) => { o.style.translate = '0 ' + (y * (0.04 + i * 0.03)) + 'px'; });
     }, { passive: true });
   }
-
-  /* al cambiar de estilo, reanimamos los contadores del hero */
-  document.addEventListener('krovia:theme', () => {
-    $$('.reveal').forEach(el => el.classList.add('is-visible'));
-  });
 })();
