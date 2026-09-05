@@ -3,27 +3,25 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>KroviaNextGen — Webs, Agentes IA y Automatización para negocios</title>
-<meta name="description" content="Agencia de webs de alto rendimiento, agentes de IA, chatbots y automatizaciones que trabajan por ti 24/7. Agenda una consulta gratuita o habla con nuestro asistente." />
+<title>KroviaNextGen — IA y automatización para tu negocio</title>
+<meta name="description" content="Webs, agentes de IA y automatizaciones que atienden, cualifican y venden por ti. Agenda una consulta gratuita." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="assets/css/styles.css" />
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
 </head>
 <body>
 
-<!-- ================= FONDO ================= -->
 <div class="bg-layer">
   <canvas id="neural-canvas"></canvas>
   <div class="bg-grid"></div>
   <div class="orb orb--violet"></div>
   <div class="orb orb--cyan"></div>
   <div class="orb orb--mint"></div>
-  <div class="bg-noise"></div>
 </div>
 
-<!-- ================= NAV ================= -->
+<!-- ============ NAV ============ -->
 <header class="nav" id="nav">
   <div class="container nav__inner">
     <a href="#hero" class="brand">
@@ -31,11 +29,7 @@
         <svg viewBox="0 0 32 32" aria-hidden="true">
           <path d="M16 2 3 9v14l13 7 13-7V9L16 2Z" fill="none" stroke="url(#g1)" stroke-width="1.6"/>
           <path d="M11 10v12M11 16l8-6M11 16l8 6" fill="none" stroke="url(#g1)" stroke-width="2" stroke-linecap="round"/>
-          <defs>
-            <linearGradient id="g1" x1="0" y1="0" x2="32" y2="32">
-              <stop offset="0" stop-color="#C084FC"/><stop offset=".55" stop-color="#22D3EE"/><stop offset="1" stop-color="#34F5C5"/>
-            </linearGradient>
-          </defs>
+          <defs><linearGradient id="g1" x1="0" y1="0" x2="32" y2="32"><stop offset="0" stop-color="#C084FC"/><stop offset=".55" stop-color="#22D3EE"/><stop offset="1" stop-color="#34F5C5"/></linearGradient></defs>
         </svg>
       </span>
       <span class="brand__text">Krovia<span>NextGen</span></span>
@@ -43,441 +37,253 @@
 
     <nav class="nav__links" id="navLinks">
       <a href="#servicios">Servicios</a>
-      <a href="#proceso">Cómo trabajamos</a>
-      <a href="#resultados">Resultados</a>
-      <a href="#faq">FAQ</a>
-      <a href="#agenda" class="btn btn--ghost btn--sm">Agendar consulta</a>
-      <button class="btn btn--primary btn--sm" data-open-chat>Hablar con el agente IA</button>
+      <a href="#proceso">Proceso</a>
+      <a href="#agenda">Contacto</a>
+      <button class="btn btn--primary btn--sm" data-cta="agenda">Agendar</button>
     </nav>
 
-    <button class="nav__burger" id="navBurger" aria-label="Abrir menú">
-      <span></span><span></span><span></span>
-    </button>
+    <button class="nav__burger" id="navBurger" aria-label="Menú"><span></span><span></span><span></span></button>
   </div>
 </header>
 
 <main>
 
-<!-- ================= HERO ================= -->
+<!-- ============ HERO ============ -->
 <section class="hero" id="hero">
   <div class="container hero__inner">
-    <div class="hero__copy">
-      <div class="pill">
-        <span class="pill__dot"></span>
-        Agentes IA · Automatización · Webs de alto rendimiento
-      </div>
+    <div class="pill"><span class="pill__dot"></span> Agentes IA · Automatización · Web</div>
 
-      <h1 class="hero__title">
-        Convierte tu negocio en una
-        <span class="grad">máquina automatizada</span>
-        que vende mientras duermes.
-      </h1>
+    <h1 class="hero__title">
+      Tu negocio,<br><span class="grad">en automático</span>.
+    </h1>
 
-      <p class="hero__sub">
-        En KroviaNextGen diseñamos webs que convierten y desplegamos <strong>agentes de IA, chatbots y automatizaciones</strong>
-        que atienden, cualifican y venden por ti — 24 horas al día, sin ampliar tu equipo.
-      </p>
+    <p class="hero__sub">
+      Webs, chatbots y agentes de IA que atienden, cualifican y venden por ti. 24/7.
+    </p>
 
-      <div class="hero__cta">
-        <a href="#agenda" class="btn btn--primary btn--lg">
-          Agendar consulta gratuita
-          <svg viewBox="0 0 24 24" class="ico"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-        <button class="btn btn--outline btn--lg" data-open-chat>
-          <span class="live-dot"></span>
-          Descubre qué necesitas en 60s
-        </button>
-      </div>
-
-      <p class="hero__micro">Sin compromiso · Respuesta en menos de 24 h · Diagnóstico gratuito de automatización</p>
-
-      <div class="hero__stats">
-        <div class="stat"><b data-count="87">0</b><span>% de tareas repetitivas eliminadas</span></div>
-        <div class="stat"><b data-count="24">0</b><span>/7 atención sin equipo extra</span></div>
-        <div class="stat"><b data-count="15">0</b><span>días para tu primer agente activo</span></div>
-      </div>
+    <div class="hero__cta">
+      <button class="btn btn--primary btn--lg" data-cta="agenda">
+        Agendar consulta gratuita
+        <svg viewBox="0 0 24 24" class="ico"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="btn btn--outline btn--lg" data-open-chat>
+        <span class="live-dot"></span> Descubre qué necesitas en 60s
+      </button>
     </div>
 
-    <!-- Visual: agente en vivo -->
-    <div class="hero__visual">
-      <div class="glass-card agent-card">
-        <div class="agent-card__top">
-          <span class="agent-card__avatar">
-            <svg viewBox="0 0 24 24"><path d="M12 3a4 4 0 0 1 4 4v1h1a3 3 0 0 1 3 3v4a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5v-4a3 3 0 0 1 3-3h1V7a4 4 0 0 1 4-4Z" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="9.5" cy="13.5" r="1.2" fill="currentColor"/><circle cx="14.5" cy="13.5" r="1.2" fill="currentColor"/></svg>
-          </span>
-          <div>
-            <strong>Agente Krovia</strong>
-            <small><span class="live-dot"></span> analizando tu negocio…</small>
-          </div>
-        </div>
+    <p class="hero__micro">Sin compromiso · Respuesta en menos de 24 h · Diagnóstico gratuito de automatización</p>
 
-        <div class="agent-card__body">
-          <div class="bubble bubble--bot">¿Qué te está costando más tiempo cada semana?</div>
-          <div class="bubble bubble--user">Responder a clientes y pasar presupuestos</div>
-          <div class="bubble bubble--bot">
-            Perfecto. Te encaja un <b>agente de atención + cualificación</b> conectado a tu web y WhatsApp.
-            <div class="mini-bars">
-              <div><span>Atención automática</span><i style="--w:92%"></i></div>
-              <div><span>Cualificación de leads</span><i style="--w:78%"></i></div>
-              <div><span>Presupuestos automáticos</span><i style="--w:65%"></i></div>
-            </div>
-          </div>
-          <div class="typing"><i></i><i></i><i></i></div>
-        </div>
-
-        <button class="btn btn--primary btn--full" data-open-chat>Probar el agente ahora</button>
-      </div>
-
-      <div class="float-chip float-chip--1">⚡ +38% leads cualificados</div>
-      <div class="float-chip float-chip--2">🤖 Respuesta en 3 segundos</div>
-      <div class="float-chip float-chip--3">🔗 Integrado con tu CRM</div>
+    <div class="hero__stats">
+      <div class="stat"><b data-count="24">0</b><span>/7 activo</span></div>
+      <div class="stat"><b data-count="15">0</b><span>días de entrega</span></div>
+      <div class="stat"><b data-count="70">0</b><span>% menos tareas</span></div>
     </div>
   </div>
 
   <div class="marquee" aria-hidden="true">
     <div class="marquee__track">
-      <span>OpenAI</span><span>·</span><span>n8n</span><span>·</span><span>Make</span><span>·</span><span>WhatsApp Business</span><span>·</span><span>HubSpot</span><span>·</span><span>Shopify</span><span>·</span><span>Stripe</span><span>·</span><span>Notion</span><span>·</span><span>Google Workspace</span><span>·</span>
-      <span>OpenAI</span><span>·</span><span>n8n</span><span>·</span><span>Make</span><span>·</span><span>WhatsApp Business</span><span>·</span><span>HubSpot</span><span>·</span><span>Shopify</span><span>·</span><span>Stripe</span><span>·</span><span>Notion</span><span>·</span><span>Google Workspace</span><span>·</span>
+      <span>OpenAI</span><span>·</span><span>n8n</span><span>·</span><span>Make</span><span>·</span><span>WhatsApp</span><span>·</span><span>HubSpot</span><span>·</span><span>Shopify</span><span>·</span><span>Stripe</span><span>·</span><span>Notion</span><span>·</span>
+      <span>OpenAI</span><span>·</span><span>n8n</span><span>·</span><span>Make</span><span>·</span><span>WhatsApp</span><span>·</span><span>HubSpot</span><span>·</span><span>Shopify</span><span>·</span><span>Stripe</span><span>·</span><span>Notion</span><span>·</span>
     </div>
   </div>
 </section>
 
-<!-- ================= DOLOR / SOLUCIÓN ================= -->
-<section class="section" id="problema">
-  <div class="container">
-    <div class="section__head">
-      <span class="eyebrow">El problema</span>
-      <h2>Tu negocio no necesita más horas. Necesita <span class="grad">sistemas</span>.</h2>
-      <p>Cada lead sin responder, cada presupuesto manual y cada tarea repetitiva es dinero que se escapa.</p>
-    </div>
-
-    <div class="split">
-      <div class="glass-card card--bad">
-        <h3>Sin automatización</h3>
-        <ul class="list list--x">
-          <li>Leads que se enfrían porque nadie contesta a tiempo</li>
-          <li>Horas perdidas copiando datos entre herramientas</li>
-          <li>Una web bonita que no genera ni una llamada</li>
-          <li>Dependes de contratar más gente para crecer</li>
-        </ul>
-      </div>
-      <div class="glass-card card--good">
-        <h3>Con KroviaNextGen</h3>
-        <ul class="list list--check">
-          <li>Agentes que responden y cualifican en segundos, 24/7</li>
-          <li>Procesos conectados de punta a punta, sin copiar y pegar</li>
-          <li>Una web diseñada para convertir visitas en reuniones</li>
-          <li>Escalas facturación sin escalar tu plantilla</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= SERVICIOS ================= -->
+<!-- ============ SERVICIOS ============ -->
 <section class="section" id="servicios">
   <div class="container">
     <div class="section__head">
       <span class="eyebrow">Servicios</span>
-      <h2>Todo lo que tu negocio necesita para <span class="grad">operar en automático</span></h2>
-      <p>Diseñamos, construimos e integramos. Tú solo ves los resultados.</p>
+      <h2>Lo que <span class="grad">construimos</span></h2>
     </div>
 
     <div class="grid grid--3">
-      <article class="glass-card service">
-        <div class="service__icon i-violet">
-          <svg viewBox="0 0 24 24"><path d="M3 6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6Z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 9h18M7 6.5h.01M9.5 6.5h.01" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <article class="tile">
+        <div class="tile__icon i-violet">
+          <svg viewBox="0 0 24 24"><path d="M3 6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6Z" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 9h18" stroke="currentColor" stroke-width="1.5"/></svg>
         </div>
-        <h3>Webs y landings que convierten</h3>
-        <p>Diseño futurista, carga ultrarrápida y copy orientado a venta. Optimizadas para que la visita acabe en una reunión agendada.</p>
-        <ul class="tags"><li>Next.js / WordPress</li><li>SEO técnico</li><li>CRO</li></ul>
+        <h3>Webs que convierten</h3>
+        <p>Rápidas, futuristas y pensadas para llenar tu agenda.</p>
       </article>
 
-      <article class="glass-card service">
-        <div class="service__icon i-cyan">
-          <svg viewBox="0 0 24 24"><path d="M12 3a4 4 0 0 1 4 4v1h1a3 3 0 0 1 3 3v4a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5v-4a3 3 0 0 1 3-3h1V7a4 4 0 0 1 4-4Z" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="9.5" cy="13.5" r="1.2" fill="currentColor"/><circle cx="14.5" cy="13.5" r="1.2" fill="currentColor"/></svg>
+      <article class="tile">
+        <div class="tile__icon i-cyan">
+          <svg viewBox="0 0 24 24"><path d="M12 3a4 4 0 0 1 4 4v1h1a3 3 0 0 1 3 3v4a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5v-4a3 3 0 0 1 3-3h1V7a4 4 0 0 1 4-4Z" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="9.5" cy="13.5" r="1.1" fill="currentColor"/><circle cx="14.5" cy="13.5" r="1.1" fill="currentColor"/></svg>
         </div>
-        <h3>Chatbots y agentes de atención</h3>
-        <p>Asistentes entrenados con tu negocio que responden dudas, cualifican leads y agendan reuniones en tu web, WhatsApp o Instagram.</p>
-        <ul class="tags"><li>Multicanal</li><li>Base de conocimiento</li><li>Handoff humano</li></ul>
+        <h3>Chatbots y agentes</h3>
+        <p>Responden, cualifican y agendan por ti en web y WhatsApp.</p>
       </article>
 
-      <article class="glass-card service">
-        <div class="service__icon i-mint">
-          <svg viewBox="0 0 24 24"><path d="M4 12h4l2-6 4 12 2-6h4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <article class="tile">
+        <div class="tile__icon i-mint">
+          <svg viewBox="0 0 24 24"><path d="M4 12h4l2-6 4 12 2-6h4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
-        <h3>Automatización de procesos</h3>
-        <p>Conectamos tus herramientas para que los datos fluyan solos: facturas, altas de cliente, informes, seguimientos y recordatorios.</p>
-        <ul class="tags"><li>n8n / Make</li><li>APIs</li><li>Integración CRM</li></ul>
+        <h3>Automatización</h3>
+        <p>Tus herramientas conectadas. Cero copiar y pegar.</p>
       </article>
 
-      <article class="glass-card service">
-        <div class="service__icon i-violet">
-          <svg viewBox="0 0 24 24"><path d="M6 6h13l-1.5 8H8L6 4H3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="19" r="1.6" fill="currentColor"/><circle cx="17" cy="19" r="1.6" fill="currentColor"/></svg>
+      <article class="tile">
+        <div class="tile__icon i-violet">
+          <svg viewBox="0 0 24 24"><path d="M6 6h13l-1.5 8H8L6 4H3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="19" r="1.5" fill="currentColor"/><circle cx="17" cy="19" r="1.5" fill="currentColor"/></svg>
         </div>
-        <h3>Agentes de compra y proveedores</h3>
-        <p>Agentes que buscan, comparan y negocian precios, controlan stock y lanzan pedidos automáticamente según tus reglas.</p>
-        <ul class="tags"><li>Scraping legal</li><li>Comparativas</li><li>Alertas de precio</li></ul>
+        <h3>Agentes de compra</h3>
+        <p>Comparan precios, vigilan stock y lanzan pedidos.</p>
       </article>
 
-      <article class="glass-card service">
-        <div class="service__icon i-cyan">
-          <svg viewBox="0 0 24 24"><path d="M4 19V5m0 14h16M8 16V9m4 7V6m4 10v-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      <article class="tile">
+        <div class="tile__icon i-cyan">
+          <svg viewBox="0 0 24 24"><path d="M4 19V5m0 14h16M8 16V9m4 7V6m4 10v-4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
         </div>
-        <h3>Dashboards e informes con IA</h3>
-        <p>Todos tus números en un panel vivo, con resúmenes automáticos que te dicen qué está pasando y qué hacer al respecto.</p>
-        <ul class="tags"><li>KPIs en vivo</li><li>Informes semanales</li><li>Alertas</li></ul>
+        <h3>Dashboards con IA</h3>
+        <p>Tus números en vivo, con el resumen ya hecho.</p>
       </article>
 
-      <article class="glass-card service">
-        <div class="service__icon i-mint">
-          <svg viewBox="0 0 24 24"><path d="M12 3v3m0 12v3M3 12h3m12 0h3M5.6 5.6l2.1 2.1m8.6 8.6 2.1 2.1m0-12.8-2.1 2.1M7.7 16.3l-2.1 2.1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="12" r="3.2" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+      <article class="tile">
+        <div class="tile__icon i-mint">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v3m0 12v3M3 12h3m12 0h3M5.6 5.6l2.1 2.1m8.6 8.6 2.1 2.1m0-12.8-2.1 2.1M7.7 16.3l-2.1 2.1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
         </div>
-        <h3>Consultoría e implantación IA</h3>
-        <p>Auditamos tu operativa, detectamos los cuellos de botella y trazamos el plan de automatización con retorno medible.</p>
-        <ul class="tags"><li>Auditoría</li><li>Roadmap</li><li>Formación</li></ul>
+        <h3>Consultoría IA</h3>
+        <p>Te decimos qué automatizar primero y cuánto rinde.</p>
       </article>
-    </div>
-
-    <div class="center">
-      <button class="btn btn--outline btn--lg" data-open-chat>¿No sabes cuál necesitas? Pregúntale al agente</button>
     </div>
   </div>
 </section>
 
-<!-- ================= PROCESO ================= -->
+<!-- ============ PROCESO ============ -->
 <section class="section" id="proceso">
   <div class="container">
     <div class="section__head">
-      <span class="eyebrow">Cómo trabajamos</span>
-      <h2>De la primera llamada a tu <span class="grad">sistema funcionando</span></h2>
-      <p>Un método claro, sin humo y con entregas visibles cada semana.</p>
+      <span class="eyebrow">Proceso</span>
+      <h2>Tres pasos. <span class="grad">Sin humo</span>.</h2>
     </div>
 
     <ol class="steps">
-      <li class="glass-card step">
-        <span class="step__num">01</span>
-        <h3>Diagnóstico</h3>
-        <p>Analizamos tu operativa y detectamos qué procesos pierden más tiempo y dinero.</p>
-      </li>
-      <li class="glass-card step">
-        <span class="step__num">02</span>
-        <h3>Plan y prototipo</h3>
-        <p>Te enseñamos el diseño y un primer agente funcionando antes de facturar el proyecto completo.</p>
-      </li>
-      <li class="glass-card step">
-        <span class="step__num">03</span>
-        <h3>Construcción</h3>
-        <p>Desarrollamos web, agentes e integraciones, con revisiones semanales contigo.</p>
-      </li>
-      <li class="glass-card step">
-        <span class="step__num">04</span>
-        <h3>Optimización</h3>
-        <p>Medimos, ajustamos y ampliamos el sistema mes a mes para que rinda más.</p>
-      </li>
+      <li class="step"><span class="step__num">01</span><h3>Diagnóstico</h3><p>30 min para ver dónde pierdes tiempo.</p></li>
+      <li class="step"><span class="step__num">02</span><h3>Prototipo</h3><p>Te enseñamos algo funcionando antes de facturar.</p></li>
+      <li class="step"><span class="step__num">03</span><h3>En marcha</h3><p>Lo montamos, lo medimos y lo mejoramos.</p></li>
     </ol>
-  </div>
-</section>
 
-<!-- ================= RESULTADOS ================= -->
-<section class="section" id="resultados">
-  <div class="container">
-    <div class="section__head">
-      <span class="eyebrow">Resultados</span>
-      <h2>Lo que cambia cuando <span class="grad">automatizas de verdad</span></h2>
-      <p class="muted-note">Cifras de referencia de proyectos tipo. Los resultados varían según sector y punto de partida.</p>
-    </div>
-
-    <div class="grid grid--3">
-      <div class="glass-card result">
-        <b>−70%</b>
-        <h3>tiempo en tareas manuales</h3>
-        <p>Presupuestos, altas y seguimientos que antes llevaban horas se resuelven solos.</p>
-      </div>
-      <div class="glass-card result">
-        <b>×3</b>
-        <h3>velocidad de respuesta a leads</h3>
-        <p>Contestar en segundos multiplica la probabilidad de cerrar la reunión.</p>
-      </div>
-      <div class="glass-card result">
-        <b>+40%</b>
-        <h3>reuniones agendadas</h3>
-        <p>Una web enfocada a conversión más un agente que guía al visitante hasta el calendario.</p>
-      </div>
-    </div>
-
-    <div class="quotes">
-      <figure class="glass-card quote">
-        <blockquote>“Pasamos de responder mensajes a las 23 h a tener un agente que cualifica y agenda solo. Recuperamos las tardes.”</blockquote>
-        <figcaption><span class="ava">M</span> Marta R. · Clínica dental</figcaption>
-      </figure>
-      <figure class="glass-card quote">
-        <blockquote>“La web nueva y el chatbot nos traen reuniones cada semana. Antes vivíamos del boca a boca.”</blockquote>
-        <figcaption><span class="ava">J</span> Jordi P. · Reformas integrales</figcaption>
-      </figure>
-      <figure class="glass-card quote">
-        <blockquote>“El agente de compras nos avisa cuando baja el precio de nuestros proveedores. Se paga solo.”</blockquote>
-        <figcaption><span class="ava">A</span> Ana L. · E-commerce</figcaption>
-      </figure>
+    <div class="numbers">
+      <div><b>−70%</b><span>tareas manuales</span></div>
+      <div><b>×3</b><span>respuesta a leads</span></div>
+      <div><b>+40%</b><span>reuniones</span></div>
     </div>
   </div>
 </section>
 
-<!-- ================= AGENDA / CTA ================= -->
-<section class="section section--cta" id="agenda">
-  <div class="container">
-    <div class="cta-wrap glass-card">
-      <div class="cta-copy">
-        <span class="eyebrow">Consulta gratuita · 30 min</span>
-        <h2>Cuéntanos tu cuello de botella y te decimos <span class="grad">cómo automatizarlo</span></h2>
-        <p>Sin compromiso y sin tecnicismos. Salgas o no con nosotros, te llevas un plan claro de por dónde empezar.</p>
-        <ul class="list list--check">
-          <li>Diagnóstico de tus procesos actuales</li>
-          <li>Propuesta de agentes y automatizaciones</li>
-          <li>Estimación de tiempos y de inversión</li>
-        </ul>
-        <div class="cta-alt">
-          <span>¿Prefieres empezar escribiendo?</span>
-          <button class="btn btn--outline" data-open-chat>Hablar con el agente IA</button>
-        </div>
-      </div>
-
-      <form class="form" id="leadForm" novalidate>
-        <h3>Agenda tu consulta</h3>
-        <div class="field">
-          <label for="f-nombre">Nombre y apellidos</label>
-          <input id="f-nombre" name="nombre" type="text" placeholder="Ramon Vallbona" required />
-        </div>
-        <div class="field">
-          <label for="f-email">Email</label>
-          <input id="f-email" name="email" type="email" placeholder="tu@empresa.com" required />
-        </div>
-        <div class="field-row">
-          <div class="field">
-            <label for="f-empresa">Empresa</label>
-            <input id="f-empresa" name="empresa" type="text" placeholder="Nombre del negocio" />
-          </div>
-          <div class="field">
-            <label for="f-tel">Teléfono</label>
-            <input id="f-tel" name="telefono" type="tel" placeholder="+34 600 000 000" />
-          </div>
-        </div>
-        <div class="field">
-          <label for="f-servicio">¿Qué te interesa?</label>
-          <select id="f-servicio" name="servicio">
-            <option value="">Selecciona una opción</option>
-            <option>Web o landing page</option>
-            <option>Chatbot / agente de atención</option>
-            <option>Automatización de procesos</option>
-            <option>Agente de compras</option>
-            <option>Dashboards e informes</option>
-            <option>No lo tengo claro todavía</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="f-msg">Cuéntanos brevemente tu situación</label>
-          <textarea id="f-msg" name="mensaje" rows="3" placeholder="Ej: recibimos 40 mensajes al día y no damos abasto…"></textarea>
-        </div>
-        <button type="submit" class="btn btn--primary btn--full btn--lg">Reservar mi consulta gratuita</button>
-        <p class="form__legal">Al enviar aceptas que contactemos contigo. Nada de spam, solo tu propuesta.</p>
-        <div class="form__ok" id="formOk" hidden>
-          ✅ ¡Solicitud recibida! Te escribimos en menos de 24 h con las horas disponibles.
-        </div>
-      </form>
-    </div>
-  </div>
-</section>
-
-<!-- ================= FAQ ================= -->
-<section class="section" id="faq">
+<!-- ============ AGENDA ============ -->
+<section class="section" id="agenda">
   <div class="container container--narrow">
     <div class="section__head">
-      <span class="eyebrow">Preguntas frecuentes</span>
-      <h2>Lo que suelen preguntarnos <span class="grad">antes de empezar</span></h2>
+      <span class="eyebrow">Consulta gratuita · 30 min</span>
+      <h2>Reserva tu <span class="grad">hueco</span></h2>
+      <p>Sin compromiso. Sales con un plan claro.</p>
     </div>
 
-    <div class="faq">
-      <details class="glass-card">
-        <summary>¿Cuánto tarda en estar funcionando?</summary>
-        <p>Una landing con agente básico suele estar activa en 10-15 días. Proyectos de automatización más complejos van por fases, con la primera entrega funcionando en el primer mes.</p>
-      </details>
-      <details class="glass-card">
-        <summary>¿Necesito tener conocimientos técnicos?</summary>
-        <p>No. Nos encargamos del diseño, el desarrollo, las integraciones y el mantenimiento. Tú decides qué debe hacer el sistema; nosotros lo construimos y te formamos para usarlo.</p>
-      </details>
-      <details class="glass-card">
-        <summary>¿El chatbot puede conectarse a WhatsApp o a mi CRM?</summary>
-        <p>Sí. Trabajamos con WhatsApp Business, Instagram, correo, calendarios y los CRM más habituales. Si tienes una herramienta con API, la conectamos.</p>
-      </details>
-      <details class="glass-card">
-        <summary>¿Qué inversión requiere?</summary>
-        <p>Depende del alcance. Hay proyectos que arrancan con una web y un agente y otros que automatizan departamentos enteros. En la consulta gratuita te damos una horquilla realista.</p>
-      </details>
-      <details class="glass-card">
-        <summary>¿Y si no sé exactamente qué necesito?</summary>
-        <p>Es lo más habitual. Habla con nuestro agente IA: te hace unas preguntas y te devuelve una recomendación concreta de por dónde empezar.</p>
-      </details>
+    <div class="book">
+      <div class="book__tabs" id="bookTabs">
+        <button class="tab is-active" data-tab="cal">📅 Elegir hora</button>
+        <button class="tab" data-tab="form">✉️ Dejar mis datos</button>
+        <button class="tab" data-tab="wa" id="tabWa" hidden>💬 WhatsApp</button>
+      </div>
+
+      <!-- Calendly -->
+      <div class="book__panel is-active" data-panel="cal">
+        <div id="calendlyBox" class="calendly-box"></div>
+        <div id="calendlyEmpty" class="empty-note" hidden>
+          <b>Calendly aún no está conectado.</b>
+          <span>Pega tu enlace en <code>assets/js/config.js</code> → <code>calendlyUrl</code>.</span>
+        </div>
+      </div>
+
+      <!-- Formulario -->
+      <div class="book__panel" data-panel="form">
+        <form class="form" id="leadForm" novalidate>
+          <div class="field-row">
+            <div class="field"><input id="f-nombre" name="nombre" type="text" placeholder="Tu nombre" required /></div>
+            <div class="field"><input id="f-email" name="email" type="email" placeholder="Tu email" required /></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><input id="f-tel" name="telefono" type="tel" placeholder="Teléfono (opcional)" /></div>
+            <div class="field">
+              <select id="f-servicio" name="servicio">
+                <option value="">¿Qué necesitas?</option>
+                <option>Web o landing</option>
+                <option>Chatbot / agente</option>
+                <option>Automatización</option>
+                <option>Agente de compras</option>
+                <option>Dashboards</option>
+                <option>Aún no lo sé</option>
+              </select>
+            </div>
+          </div>
+          <div class="field"><textarea id="f-msg" name="mensaje" rows="2" placeholder="Cuéntame en una línea (opcional)"></textarea></div>
+          <button type="submit" class="btn btn--primary btn--full btn--lg" id="leadSubmit">Enviar y reservar</button>
+          <p class="form__legal">Respuesta en menos de 24 h. Sin spam.</p>
+          <div class="form__msg" id="formMsg" hidden></div>
+        </form>
+      </div>
+
+      <!-- WhatsApp -->
+      <div class="book__panel" data-panel="wa">
+        <div class="wa-box">
+          <p>Escríbenos directamente y te contestamos hoy mismo.</p>
+          <a class="btn btn--primary btn--lg" id="waLink" href="#" target="_blank" rel="noopener">Abrir WhatsApp</a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ================= BANDA FINAL ================= -->
+<!-- ============ FAQ ============ -->
+<section class="section" id="faq">
+  <div class="container container--narrow">
+    <div class="section__head"><span class="eyebrow">FAQ</span><h2>Dudas <span class="grad">rápidas</span></h2></div>
+    <div class="faq">
+      <details><summary>¿Cuánto tarda?</summary><p>Web + agente básico: 10-15 días. Proyectos grandes, por fases.</p></details>
+      <details><summary>¿Necesito saber de tecnología?</summary><p>No. Nosotros lo montamos y te enseñamos a usarlo.</p></details>
+      <details><summary>¿Se conecta a WhatsApp o a mi CRM?</summary><p>Sí. Si tiene API, lo conectamos.</p></details>
+      <details><summary>¿Cuánto cuesta?</summary><p>Depende del alcance. En la consulta te damos una horquilla real.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA FINAL ============ -->
 <section class="final-cta">
   <div class="container">
-    <h2>El próximo mes tu negocio puede funcionar <span class="grad">sin ti delante</span>.</h2>
+    <h2>Empieza <span class="grad">esta semana</span>.</h2>
     <div class="hero__cta center">
-      <a href="#agenda" class="btn btn--primary btn--lg">Agendar consulta gratuita</a>
-      <button class="btn btn--outline btn--lg" data-open-chat>Descubrir qué necesito</button>
+      <button class="btn btn--primary btn--lg" data-cta="agenda">Agendar consulta</button>
+      <button class="btn btn--outline btn--lg" data-open-chat>Hablar con el agente</button>
     </div>
   </div>
 </section>
 
 </main>
 
-<!-- ================= FOOTER ================= -->
+<!-- ============ FOOTER ============ -->
 <footer class="footer">
   <div class="container footer__inner">
-    <div>
-      <a href="#hero" class="brand">
-        <span class="brand__mark">
-          <svg viewBox="0 0 32 32" aria-hidden="true">
-            <path d="M16 2 3 9v14l13 7 13-7V9L16 2Z" fill="none" stroke="url(#g2)" stroke-width="1.6"/>
-            <path d="M11 10v12M11 16l8-6M11 16l8 6" fill="none" stroke="url(#g2)" stroke-width="2" stroke-linecap="round"/>
-            <defs><linearGradient id="g2" x1="0" y1="0" x2="32" y2="32"><stop offset="0" stop-color="#C084FC"/><stop offset=".55" stop-color="#22D3EE"/><stop offset="1" stop-color="#34F5C5"/></linearGradient></defs>
-          </svg>
-        </span>
-        <span class="brand__text">Krovia<span>NextGen</span></span>
-      </a>
-      <p class="footer__claim">Webs, agentes de IA y automatización para negocios que quieren crecer sin multiplicar su equipo.</p>
-    </div>
-    <nav class="footer__links">
-      <h4>Servicios</h4>
-      <a href="#servicios">Webs y landings</a>
-      <a href="#servicios">Chatbots y agentes</a>
-      <a href="#servicios">Automatización</a>
-      <a href="#servicios">Agentes de compra</a>
-    </nav>
-    <nav class="footer__links">
-      <h4>Agencia</h4>
-      <a href="#proceso">Cómo trabajamos</a>
-      <a href="#resultados">Resultados</a>
-      <a href="#faq">FAQ</a>
+    <a href="#hero" class="brand">
+      <span class="brand__mark">
+        <svg viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M16 2 3 9v14l13 7 13-7V9L16 2Z" fill="none" stroke="url(#g2)" stroke-width="1.6"/>
+          <path d="M11 10v12M11 16l8-6M11 16l8 6" fill="none" stroke="url(#g2)" stroke-width="2" stroke-linecap="round"/>
+          <defs><linearGradient id="g2" x1="0" y1="0" x2="32" y2="32"><stop offset="0" stop-color="#C084FC"/><stop offset=".55" stop-color="#22D3EE"/><stop offset="1" stop-color="#34F5C5"/></linearGradient></defs>
+        </svg>
+      </span>
+      <span class="brand__text">Krovia<span>NextGen</span></span>
+    </a>
+    <nav class="footer__nav">
+      <a href="#servicios">Servicios</a>
+      <a href="#proceso">Proceso</a>
       <a href="#agenda">Contacto</a>
+      <a href="#" id="footerMail">Email</a>
     </nav>
-    <div class="footer__links">
-      <h4>Contacto</h4>
-      <a href="mailto:hola@krovianextgen.com">hola@krovianextgen.com</a>
-      <a href="#agenda">Agendar consulta</a>
-      <button class="btn btn--outline btn--sm" data-open-chat>Hablar con el agente</button>
-    </div>
-  </div>
-  <div class="container footer__bottom">
-    <small>© <span id="year"></span> KroviaNextGen · Todos los derechos reservados</small>
-    <small><a href="#">Aviso legal</a> · <a href="#">Privacidad</a> · <a href="#">Cookies</a></small>
+    <small>© <span id="year"></span> KroviaNextGen</small>
   </div>
 </footer>
 
-<!-- ================= CHATBOT ================= -->
+<!-- ============ CHATBOT ============ -->
 <button class="chat-launcher" id="chatLauncher" aria-label="Abrir asistente">
   <span class="chat-launcher__ring"></span>
   <svg viewBox="0 0 24 24"><path d="M12 3a4 4 0 0 1 4 4v1h1a3 3 0 0 1 3 3v4a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5v-4a3 3 0 0 1 3-3h1V7a4 4 0 0 1 4-4Z" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="9.5" cy="13.5" r="1.2" fill="currentColor"/><circle cx="14.5" cy="13.5" r="1.2" fill="currentColor"/></svg>
@@ -490,35 +296,28 @@
       <span class="chat__avatar">
         <svg viewBox="0 0 24 24"><path d="M12 3a4 4 0 0 1 4 4v1h1a3 3 0 0 1 3 3v4a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5v-4a3 3 0 0 1 3-3h1V7a4 4 0 0 1 4-4Z" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="9.5" cy="13.5" r="1.2" fill="currentColor"/><circle cx="14.5" cy="13.5" r="1.2" fill="currentColor"/></svg>
       </span>
-      <div>
-        <strong>Agente Krovia</strong>
-        <small><span class="live-dot"></span> en línea · responde al instante</small>
-      </div>
+      <div><strong>Agente Krovia</strong><small><span class="live-dot"></span> en línea</small></div>
     </div>
     <div class="chat__actions">
-      <button id="chatRestart" title="Reiniciar conversación" aria-label="Reiniciar">
-        <svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.3-5.6M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-      <button id="chatClose" title="Cerrar" aria-label="Cerrar">
-        <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-      </button>
+      <button id="chatRestart" aria-label="Reiniciar"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.3-5.6M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <button id="chatClose" aria-label="Cerrar"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
     </div>
   </header>
-
   <div class="chat__progress"><i id="chatProgress"></i></div>
-
   <div class="chat__body" id="chatBody"></div>
-
   <div class="chat__options" id="chatOptions"></div>
-
   <form class="chat__input" id="chatForm">
     <input id="chatText" type="text" placeholder="Escribe tu respuesta…" autocomplete="off" />
-    <button type="submit" aria-label="Enviar">
-      <svg viewBox="0 0 24 24"><path d="M4 12l16-8-6 8 6 8-16-8Z" fill="currentColor"/></svg>
-    </button>
+    <button type="submit" aria-label="Enviar"><svg viewBox="0 0 24 24"><path d="M4 12l16-8-6 8 6 8-16-8Z" fill="currentColor"/></svg></button>
   </form>
 </aside>
 
+<!-- Botón flotante de WhatsApp (aparece si hay número en config) -->
+<a class="wa-float" id="waFloat" href="#" target="_blank" rel="noopener" hidden aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2Zm5.4 14.1c-.2.6-1.3 1.2-1.8 1.2-.5 0-1 .2-3.3-.7-2.8-1.1-4.5-4-4.7-4.2-.1-.2-1-1.4-1-2.6s.6-1.8.9-2c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5c-.1.2-.3.3-.1.6.1.3.7 1.2 1.5 1.9 1 .9 1.8 1.1 2 1.2.3.1.4.1.6-.1l.8-.9c.2-.2.4-.2.6-.1l1.9.9c.2.1.4.2.4.3.1.1.1.6-.1 1.3Z" fill="currentColor"/></svg>
+</a>
+
+<script src="assets/js/config.js"></script>
 <script src="assets/js/chatbot.js"></script>
 <script src="assets/js/main.js"></script>
 </body>

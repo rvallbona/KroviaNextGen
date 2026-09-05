@@ -371,24 +371,59 @@
       body.appendChild(el);
       scrollDown();
 
+      /* --- Envío real del lead --- */
+      const resumenTxt =
+        'Servicio recomendado: ' + svc.nombre + '. ' +
+        filas.map(r => r[0] + ': ' + r[1]).join(' · ');
+
+      const K = window.Krovia || {};
+      if (K.leadFromChat) {
+        K.leadFromChat({
+          nombre: a.nombre || '',
+          email: a.email || '',
+          servicio: svc.nombre,
+          recomendacion: main,
+          complementarios: extra,
+          respuestas: a,
+          mensaje: resumenTxt
+        }).then(res => {
+          if (res && res.ok) botSay(['Ya le he pasado tu ficha al equipo ✅']);
+        });
+      }
+
+      /* --- CTAs finales --- */
       setTimeout(() => {
         const cta = document.createElement('button');
         cta.type = 'button';
         cta.className = 'opt opt--cta';
-        cta.textContent = '📅 Agendar mi consulta gratuita';
+        cta.textContent = K.hasCalendly ? '📅 Elegir hora en la agenda' : '📅 Reservar mi consulta';
         cta.addEventListener('click', () => {
-          window.KroviaChat.prefillForm();
-          window.KroviaChat.close();
-          document.getElementById('agenda').scrollIntoView({ behavior: 'smooth' });
+          if (K.goAgenda) {
+            K.goAgenda({ name: a.nombre, email: a.email, servicio: svc.nombre, mensaje: resumenTxt });
+          } else {
+            document.getElementById('agenda').scrollIntoView({ behavior: 'smooth' });
+          }
         });
+        opts.appendChild(cta);
+
+        if (K.hasWhatsApp && K.waLink) {
+          const wa = document.createElement('a');
+          wa.className = 'opt opt--wa';
+          wa.target = '_blank';
+          wa.rel = 'noopener';
+          wa.textContent = '💬 Seguir por WhatsApp';
+          wa.href = K.waLink(
+            'Hola, soy ' + (a.nombre || '') + '. He hecho el test de la web y me recomienda: ' + svc.nombre + '. ' +
+            filas.map(r => r[0] + ': ' + r[1]).join(' · ')
+          );
+          opts.appendChild(wa);
+        }
 
         const again = document.createElement('button');
         again.type = 'button';
         again.className = 'opt';
         again.textContent = '↺ Empezar de nuevo';
         again.addEventListener('click', reset);
-
-        opts.appendChild(cta);
         opts.appendChild(again);
       }, 400);
     }, 1100);
@@ -427,8 +462,6 @@
     start() { if (!this.started) { this.started = true; goto('start'); } },
     reset,
     answers: () => state.answers,
-    recommendation: () => topServices(),
-    close() {},          // lo sobreescribe main.js
-    prefillForm() {}     // lo sobreescribe main.js
+    recommendation: () => topServices()
   };
 })();
