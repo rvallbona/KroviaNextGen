@@ -396,7 +396,7 @@
         const cta = document.createElement('button');
         cta.type = 'button';
         cta.className = 'opt opt--cta';
-        cta.textContent = K.hasCalendly ? '📅 Elegir hora en la agenda' : '📅 Reservar mi consulta';
+        cta.textContent = K.hasAgenda ? '📅 Elegir hora en la agenda' : '📅 Reservar mi consulta';
         cta.addEventListener('click', () => {
           if (K.goAgenda) {
             K.goAgenda({ name: a.nombre, email: a.email, servicio: svc.nombre, mensaje: resumenTxt });

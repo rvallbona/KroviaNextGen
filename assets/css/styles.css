@@ -140,7 +140,7 @@ body.has-cursor .cursor-glow{opacity:1}
   white-space:nowrap;background:transparent;color:var(--text);position:relative;overflow:hidden;
 }
 .btn .ico{width:18px;height:18px;transition:transform .25s}
-.btn:hover .ico{transform:translateX(4px)}
+.btn:hover .ico{transform:translateX(3px)}
 /* destello que cruza el botón */
 .btn::before{
   content:'';position:absolute;top:0;left:-120%;width:60%;height:100%;
@@ -278,10 +278,58 @@ body.has-cursor .cursor-glow{opacity:1}
 .book__panel{display:none;padding:18px}
 .book__panel.is-active{display:block;animation:fade .35s ease}
 @keyframes fade{from{opacity:0;transform:translateY(8px)}}
-.calendly-box{min-height:640px;border-radius:var(--radius-sm);overflow:hidden}
-.empty-note{padding:40px 24px;text-align:center;color:var(--muted);font-size:.92rem;display:flex;flex-direction:column;gap:8px}
-.empty-note b{color:var(--text);font-family:var(--fd)}
-.empty-note code{background:rgba(var(--rgb1),.15);padding:2px 7px;border-radius:6px;font-size:.85em;color:var(--c1)}
+/* ---------- agenda propia: día → hora → datos ---------- */
+.ag__loading{padding:34px 0;text-align:center;color:var(--muted-2);font-size:.9rem}
+.ag__demo{
+  padding:11px 14px;margin-bottom:16px;border:1px dashed rgba(var(--rgb3),.5);
+  background:rgba(var(--rgb3),.07);color:var(--muted);font-size:.83rem;line-height:1.5;
+}
+.ag__demo b{color:var(--c3)}
+.ag__head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:4px}
+.ag__step{font-family:var(--fd);font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:var(--c1)}
+.ag__title{margin:0;font-size:1.1rem}
+.ag__sub{color:var(--muted);font-size:.88rem;margin:0}
+
+.ag__days{display:grid;grid-template-columns:repeat(auto-fill,minmax(74px,1fr));gap:8px;margin:16px 0 12px}
+.ag__day{
+  display:flex;flex-direction:column;align-items:center;gap:1px;padding:11px 6px;cursor:pointer;
+  border:1px solid var(--line-2);border-radius:var(--radius-sm);background:var(--card);color:var(--text);
+  font-family:var(--fb);transition:.2s;
+}
+.ag__day:hover:not(:disabled){border-color:var(--c1);background:rgba(var(--rgb1),.12);transform:translateY(-2px)}
+.ag__day:disabled{opacity:.32;cursor:not-allowed}
+.ag__day-wd{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2)}
+.ag__day-n{font-family:var(--fd);font-size:1.5rem;font-weight:var(--h-weight);line-height:1.1}
+.ag__day-m{font-size:.72rem;color:var(--muted-2)}
+
+.ag__slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(82px,1fr));gap:8px;margin:16px 0 12px}
+.ag__slot{
+  padding:12px 6px;cursor:pointer;border:1px solid var(--line-2);border-radius:var(--radius-sm);
+  background:var(--card);color:var(--text);font-family:var(--fd);font-size:.95rem;font-weight:600;transition:.2s;
+}
+.ag__slot:hover:not(:disabled){border-color:var(--c1);background:rgba(var(--rgb1),.12);transform:translateY(-2px)}
+.ag__slot.is-taken{opacity:.35;cursor:not-allowed;text-decoration:line-through;background:transparent}
+
+.ag__hint{font-size:.79rem;color:var(--muted-2);margin:0 0 10px;line-height:1.5}
+.ag__back{background:none;border:0;padding:6px 0;cursor:pointer;color:var(--c1);font-family:var(--fb);font-size:.85rem;transition:.2s}
+.ag__back:hover{color:var(--c3);translate:-3px 0}
+
+.ag__form{margin-top:16px}
+/* trampa antibots: fuera de la vista, nunca enfocable */
+.ag__hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.ag__legal{font-size:.74rem;color:var(--muted-2);text-align:center;margin:10px 0 0}
+.ag__msg{margin-top:12px;padding:11px;border:1px solid rgba(var(--rgb3),.3);background:rgba(var(--rgb3),.1);
+  color:var(--c3);font-size:.87rem;text-align:center}
+.ag__msg.is-error{background:rgba(248,113,113,.1);border-color:rgba(248,113,113,.35);color:#FCA5A5}
+
+.ag__done{text-align:center;padding:20px 0 10px;display:flex;flex-direction:column;align-items:center;gap:8px}
+.ag__check{
+  width:52px;height:52px;display:grid;place-items:center;margin-bottom:6px;
+  border:1px solid var(--c3);border-radius:50%;color:var(--c3);font-size:1.5rem;
+  box-shadow:0 0 0 6px rgba(var(--rgb3),.08);
+}
+.ag__done .btn{margin-top:10px}
+
 .wa-box{text-align:center;padding:30px 10px;display:flex;flex-direction:column;align-items:center;gap:8px}
 .wa-box p{color:var(--muted)}
 

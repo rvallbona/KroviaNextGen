@@ -179,7 +179,7 @@
 <section class="section" id="agenda">
   <div class="container container--narrow">
     <div class="section__head">
-      <span class="eyebrow">Consulta gratuita · 30 min</span>
+      <span class="eyebrow" id="agendaEyebrow">Consulta gratuita &middot; 15 min</span>
       <h2>Reserva tu <span class="grad">hueco</span></h2>
       <p>Sin compromiso. Sales con un plan claro.</p>
     </div>
@@ -191,13 +191,9 @@
         <button class="tab" data-tab="wa" id="tabWa" hidden>💬 WhatsApp</button>
       </div>
 
-      <!-- Calendly -->
+      <!-- Agenda: día → hora → datos (assets/js/booking.js) -->
       <div class="book__panel is-active" data-panel="cal">
-        <div id="calendlyBox" class="calendly-box"></div>
-        <div id="calendlyEmpty" class="empty-note" hidden>
-          <b>Calendly aún no está conectado.</b>
-          <span>Pega tu enlace en <code>assets/js/config.js</code> → <code>calendlyUrl</code>.</span>
-        </div>
+        <div id="agendaBox"></div>
       </div>
 
       <!-- Formulario -->
@@ -222,6 +218,7 @@
             </div>
           </div>
           <div class="field"><textarea id="f-msg" name="mensaje" rows="2" placeholder="Cuéntame en una línea (opcional)"></textarea></div>
+          <div class="ag__hp" aria-hidden="true"><input name="web" tabindex="-1" autocomplete="off" /></div>
           <button type="submit" class="btn btn--primary btn--full btn--lg" id="leadSubmit">Enviar y reservar</button>
           <p class="form__legal">Respuesta en menos de 24 h. Sin spam.</p>
           <div class="form__msg" id="formMsg" hidden></div>
@@ -324,6 +321,7 @@
 
 <script src="assets/js/config.js"></script>
 <script src="assets/js/background.js"></script>
+<script src="assets/js/booking.js"></script>
 <script src="assets/js/chatbot.js"></script>
 <script src="assets/js/main.js"></script>
 </body>

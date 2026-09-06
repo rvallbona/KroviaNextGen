@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex" />
+<title>Tu cita · KroviaNextGen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/css/styles.css" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
+<style>
+  .cita{min-height:100vh;display:grid;place-items:center;padding:100px 20px 60px}
+  .cita__card{width:100%;max-width:520px;border:1px solid var(--line);background:var(--glass);
+    backdrop-filter:blur(14px);box-shadow:var(--shadow);padding:30px 28px}
+  .cita__card h1{font-size:1.5rem;margin-bottom:6px}
+  .cita__datos{margin:20px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .cita__fila{display:flex;justify-content:space-between;gap:16px;padding:11px 0;font-size:.9rem}
+  .cita__fila+.cita__fila{border-top:1px dashed var(--line)}
+  .cita__fila span{color:var(--muted-2)}
+  .cita__fila b{font-weight:500;text-align:right}
+  .cita__acciones{display:flex;gap:10px;flex-wrap:wrap}
+  .cita__acciones .btn{flex:1;min-width:180px}
+  .btn--danger{border:1px solid rgba(248,113,113,.45);background:rgba(248,113,113,.1);color:#FCA5A5}
+  .btn--danger:hover{background:rgba(248,113,113,.2);border-color:#F87171}
+</style>
+</head>
+<body>
+
+<div class="bg-layer">
+  <canvas id="neural-canvas"></canvas>
+  <div class="bg-grid"></div>
+  <div class="orb orb--1"></div>
+  <div class="orb orb--2"></div>
+  <div class="bg-noise"></div>
+</div>
+
+<header class="nav is-scrolled">
+  <div class="container nav__inner">
+    <a href="index.html" class="brand">
+      <span class="brand__mark">
+        <svg viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M16 2 3 9v14l13 7 13-7V9L16 2Z" fill="none" stroke="url(#g1)" stroke-width="1.6"/>
+          <path d="M11 10v12M11 16l8-6M11 16l8 6" fill="none" stroke="url(#g1)" stroke-width="2" stroke-linecap="round"/>
+          <defs><linearGradient id="g1" x1="0" y1="0" x2="32" y2="32"><stop offset="0" stop-color="#7FC8FF"/><stop offset=".5" stop-color="#B9DEFF"/><stop offset="1" stop-color="#5AE0C0"/></linearGradient></defs>
+        </svg>
+      </span>
+      <span class="brand__text">Krovia<span>NextGen</span></span>
+    </a>
+    <a href="index.html#agenda" class="btn btn--outline btn--sm">Volver a la web</a>
+  </div>
+</header>
+
+<main class="cita">
+  <div class="cita__card" id="card">
+    <p class="ag__loading">Buscando tu cita…</p>
+  </div>
+</main>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/background.js"></script>
+<script>
+/* ============================================================
+   Página de cancelación. Todo cuelga del token del enlace
+   (?t=xxxxxxxx). Sin token no hay nada que enseñar.
+   ============================================================ */
+(function () {
+  'use strict';
+  var API = String((window.KROVIA_CONFIG || {}).apiBase || '').replace(/\/+$/, '');
+  var card = document.getElementById('card');
+  var token = new URLSearchParams(location.search).get('t') || '';
+
+  var ESCAPES = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' };
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return ESCAPES[c]; });
+  }
+
+  function pintaError(txt) {
+    card.innerHTML =
+      '<h1>No hemos podido abrir la cita</h1>' +
+      '<p class="ag__hint">' + esc(txt) + '</p>' +
+      '<a class="btn btn--primary btn--full" href="index.html#agenda">Ir a la agenda</a>';
+  }
+
+  function filas(r) {
+    return '<div class="cita__datos">' +
+      '<div class="cita__fila"><span>Cuándo</span><b>' + esc(r.cuando) + '</b></div>' +
+      '<div class="cita__fila"><span>Duración</span><b>' + esc(r.duracion) + ' min</b></div>' +
+      (r.servicio ? '<div class="cita__fila"><span>Servicio</span><b>' + esc(r.servicio) + '</b></div>' : '') +
+      '<div class="cita__fila"><span>Zona horaria</span><b>' + esc(r.zona) + '</b></div>' +
+      '</div>';
+  }
+
+  function pintaCancelada(r) {
+    card.innerHTML =
+      '<div class="ag__done" style="padding:0 0 6px"><div class="ag__check">✓</div></div>' +
+      '<h1>Cita cancelada</h1>' +
+      '<p class="ag__hint">El hueco vuelve a estar libre. Te hemos enviado la confirmación por correo.</p>' +
+      filas(r) +
+      '<a class="btn btn--primary btn--full btn--lg" href="index.html#agenda">Elegir otra hora</a>';
+  }
+
+  function pintaCita(r) {
+    if (r.estado === 'cancelada') return pintaCancelada(r);
+
+    if (r.pasada) {
+      card.innerHTML =
+        '<h1>Esta cita ya ha pasado</h1>' +
+        '<p class="ag__hint">No hay nada que cancelar.</p>' + filas(r) +
+        '<a class="btn btn--primary btn--full" href="index.html#agenda">Reservar otra</a>';
+      return;
+    }
+
+    card.innerHTML =
+      '<h1>Hola, ' + esc(r.nombre) + '</h1>' +
+      '<p class="ag__hint">Esta es tu consulta reservada. Si no te viene bien, cancélala y el hueco queda libre para otra persona.</p>' +
+      filas(r) +
+      '<div class="cita__acciones">' +
+        '<a class="btn btn--outline" href="index.html#agenda">Mantenerla</a>' +
+        '<button class="btn btn--danger" id="btnCancelar" type="button">Cancelar la cita</button>' +
+      '</div>' +
+      '<div class="ag__msg" id="msg" hidden></div>';
+
+    document.getElementById('btnCancelar').addEventListener('click', async function () {
+      var b = this, msg = document.getElementById('msg');
+      b.disabled = true; b.textContent = 'Cancelando…';
+      try {
+        var res = await fetch(API + '/api/cancel', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ t: token })
+        });
+        var data = await res.json().catch(function () { return null; });
+        if (res.ok && data && data.ok) return pintaCancelada(data.reserva || r);
+        msg.hidden = false; msg.className = 'ag__msg is-error';
+        msg.textContent = (data && data.error) || 'No hemos podido cancelarla.';
+      } catch (e) {
+        msg.hidden = false; msg.className = 'ag__msg is-error';
+        msg.textContent = 'Sin conexión con el servidor. Inténtalo en un momento.';
+      }
+      b.disabled = false; b.textContent = 'Cancelar la cita';
+    });
+  }
+
+  if (!/^[a-f0-9]{32}$/.test(token)) {
+    pintaError('El enlace está incompleto. Ábrelo tal cual viene en el correo de confirmación.');
+    return;
+  }
+
+  fetch(API + '/api/cancel?t=' + encodeURIComponent(token))
+    .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
+    .then(function (x) {
+      if (x.ok && x.d && x.d.ok) pintaCita(x.d.reserva);
+      else pintaError((x.d && x.d.error) || 'No encontramos esa cita.');
+    })
+    .catch(function () {
+      pintaError('No hay conexión con el servidor. Inténtalo en un momento.');
+    });
+})();
+</script>
+</body>
+</html>

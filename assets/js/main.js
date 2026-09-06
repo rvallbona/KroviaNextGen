@@ -1,22 +1,17 @@
 /* ============================================================
-   KroviaNextGen — Interacciones + integraciones reales
-   (Supabase · Calendly · WhatsApp · Webhook n8n/Make/Zapier)
+   KroviaNextGen — Interacciones + integraciones
+   Los datos NO se envían desde aquí a Supabase: van a nuestras
+   funciones (/api/lead y /api/book), que son las únicas que
+   tienen las claves privadas. Ver api/_lib.js y README.md.
    ============================================================ */
 (function () {
   'use strict';
   const CFG = Object.assign(
-    { calendlyUrl: '', whatsappNumber: '', webhookUrl: '', email: '', supabaseUrl: '', supabaseAnonKey: '', whatsappMensaje: 'Hola, vengo de la web de KroviaNextGen.' },
+    { apiBase: '', whatsappNumber: '', email: '', whatsappMensaje: 'Hola, vengo de la web de KroviaNextGen.' },
     window.KROVIA_CONFIG || {}
   );
+  const API = String(CFG.apiBase || '').replace(/\/+$/, '');
 
-  /* ============ SUPABASE ============ */
-  /* Cliente único. Solo se crea si hay credenciales y el SDK ha cargado. */
-  const supa = (CFG.supabaseUrl && CFG.supabaseAnonKey && window.supabase)
-    ? window.supabase.createClient(CFG.supabaseUrl, CFG.supabaseAnonKey)
-    : null;
-  if ((CFG.supabaseUrl || CFG.supabaseAnonKey) && !supa) {
-    console.warn('[Krovia] Supabase sin configurar del todo: revisa supabaseUrl y supabaseAnonKey en config.js, y que el <script> del SDK vaya antes que main.js.');
-  }
   const $ = s => document.querySelector(s);
   const $$ = s => Array.from(document.querySelectorAll(s));
 
@@ -70,96 +65,40 @@
   }
   tabs.forEach(t => t.addEventListener('click', () => showTab(t.dataset.tab)));
 
-  /* ============ CALENDLY ============ */
-  let calLoaded = false;
-  function loadCalendly(prefill) {
-    if (!CFG.calendlyUrl) { $('#calendlyBox').hidden = true; $('#calendlyEmpty').hidden = false; showTab('form'); return; }
-    if (calLoaded) return;
-    calLoaded = true;
-    const css = document.createElement('link');
-    css.rel = 'stylesheet'; css.href = 'https://assets.calendly.com/assets/external/widget.css';
-    document.head.appendChild(css);
-    const js = document.createElement('script');
-    js.src = 'https://assets.calendly.com/assets/external/widget.js'; js.async = true;
-    js.onload = () => {
-      if (!window.Calendly) return;
-      window.Calendly.initInlineWidget({
-        url: CFG.calendlyUrl + '?hide_gdpr_banner=1&background_color=08152b&text_color=dce9ff&primary_color=7fc8ff',
-        parentElement: $('#calendlyBox'),
-        prefill: prefill || {}
-      });
-    };
-    js.onerror = () => { $('#calendlyEmpty').hidden = false; };
-    document.body.appendChild(js);
-  }
-  // Carga perezosa: solo cuando la sección entra en pantalla o se pulsa una CTA
-  const agendaIO = new IntersectionObserver(es => {
-    if (es.some(e => e.isIntersecting)) { loadCalendly(); agendaIO.disconnect(); }
-  }, { rootMargin: '300px' });
-  agendaIO.observe($('#agenda'));
-
+  /* ============ AGENDA ============ */
   function goAgenda(prefill, tab) {
-    loadCalendly(prefill);
+    if (prefill && window.KroviaAgenda) window.KroviaAgenda.prefill(prefill);
     if (tab) showTab(tab);
     $('#agenda').scrollIntoView({ behavior: 'smooth' });
   }
   $$('[data-cta="agenda"]').forEach(b => b.addEventListener('click', () => goAgenda()));
 
   /* ============ ENVÍO DE LEADS ============ */
+  /* Va a /api/lead: es la función la que guarda en Supabase y
+     manda los avisos, porque es la única con las claves privadas. */
   async function sendLead(data) {
-    const payload = Object.assign({
-      origen: 'landing-krovianextgen',
-      url: location.href,
-      fecha: new Date().toISOString()
-    }, data);
+    const payload = Object.assign({ origen: 'formulario-web', url: location.href }, data);
 
-    // copia local siempre (por si falla la red)
+    // copia local siempre, por si se cae la red mientras envía
     try {
       const prev = JSON.parse(localStorage.getItem('krovia_leads') || '[]');
-      prev.push(payload); localStorage.setItem('krovia_leads', JSON.stringify(prev));
-    } catch (e) { /* ignorar */ }
+      prev.push(Object.assign({ fecha: new Date().toISOString() }, payload));
+      localStorage.setItem('krovia_leads', JSON.stringify(prev));
+    } catch (e) { /* modo privado */ }
 
-    if (!supa && !CFG.webhookUrl) return { ok: false, reason: 'sin-destino', payload };
-
-    let supaOk = false, webhookOk = false, lastError = null;
-
-    // 1) Supabase — destino principal
-    if (supa) {
-      try {
-        const { error } = await supa.from('leads').insert({
-          nombre:   payload.nombre   || null,
-          email:    payload.email    || null,
-          telefono: payload.telefono || null,
-          servicio: payload.servicio || null,
-          mensaje:  payload.mensaje  || null,
-          origen:   payload.origen   || null,
-          url:      payload.url      || null,
-          chatbot:  payload.chatbot  || null
-        });
-        if (error) { lastError = error.message; console.error('[Krovia] Supabase:', error); }
-        else supaOk = true;
-      } catch (err) {
-        lastError = String(err); console.error('[Krovia] Supabase:', err);
-      }
+    try {
+      const r = await fetch(API + '/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const res = await r.json().catch(() => null);
+      if (r.ok && res && res.ok) return { ok: true, payload };
+      if (r.status === 404) return { ok: false, reason: 'sin-destino', payload };
+      return { ok: false, reason: 'network', error: (res && res.error) || ('HTTP ' + r.status), payload };
+    } catch (err) {
+      return { ok: false, reason: 'network', error: String(err), payload };
     }
-
-    // 2) Webhook — opcional, se envía además de Supabase
-    if (CFG.webhookUrl) {
-      try {
-        const r = await fetch(CFG.webhookUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-        webhookOk = r.ok;
-        if (!r.ok) lastError = 'webhook HTTP ' + r.status;
-      } catch (err) {
-        lastError = String(err);
-      }
-    }
-
-    // Basta con que UN destino haya funcionado para no perder el lead.
-    return { ok: supaOk || webhookOk, supaOk, webhookOk, reason: 'network', error: lastError, payload };
   }
 
   function mailtoFallback(data) {
@@ -194,10 +133,14 @@
     if (res.ok) {
       show('✅ Recibido. Te escribimos en menos de 24 h.');
       form.reset();
-      if (CFG.calendlyUrl) setTimeout(() => { showTab('cal'); loadCalendly({ name: data.nombre, email: data.email }); }, 1200);
+      // con los datos ya puestos, le ofrecemos elegir hora directamente
+      setTimeout(() => {
+        showTab('cal');
+        if (window.KroviaAgenda) window.KroviaAgenda.prefill({ nombre: data.nombre, email: data.email, telefono: data.telefono, servicio: data.servicio });
+      }, 1400);
     } else if (res.reason === 'sin-destino') {
       const m = mailtoFallback(data);
-      show('Guardado. Falta conectar Supabase en <code>config.js</code>' + (m ? ' — <a href="' + m + '">enviar por email</a>' : ''), true);
+      show('No hay servidor detrás (falta desplegar <code>/api</code>)' + (m ? ' — <a href="' + m + '">enviar por email</a>' : ''), true);
     } else {
       const m = mailtoFallback(data);
       show('No hemos podido enviarlo' + (m ? ' — <a href="' + m + '">escríbenos por email</a>' : '') + '.', true);
@@ -229,7 +172,7 @@
 
   /* Puente chat -> integraciones */
   window.Krovia = {
-    hasCalendly: !!CFG.calendlyUrl,
+    hasAgenda: true,
     hasWhatsApp: !!CFG.whatsappNumber,
     closeChat,
     waLink,
@@ -240,14 +183,16 @@
     },
     goAgenda(prefill) {
       closeChat();
-      goAgenda(prefill, CFG.calendlyUrl ? 'cal' : 'form');
+      // el chatbot habla de "name"; la agenda y el formulario, de "nombre"
+      const p = Object.assign({}, prefill, { nombre: (prefill && (prefill.nombre || prefill.name)) || '' });
+      goAgenda(p, 'cal');
       if (prefill) {
-        if (prefill.name) $('#f-nombre').value = prefill.name;
-        if (prefill.email) $('#f-email').value = prefill.email;
-        if (prefill.mensaje) $('#f-msg').value = prefill.mensaje;
-        if (prefill.servicio) {
+        if (p.nombre) $('#f-nombre').value = p.nombre;
+        if (p.email) $('#f-email').value = p.email;
+        if (p.mensaje) $('#f-msg').value = p.mensaje;
+        if (p.servicio) {
           const sel = $('#f-servicio');
-          Array.from(sel.options).forEach(o => { if (o.text.toLowerCase().includes(prefill.servicio.toLowerCase())) sel.value = o.value || o.text; });
+          Array.from(sel.options).forEach(o => { if (o.text.toLowerCase().includes(String(p.servicio).toLowerCase())) sel.value = o.value || o.text; });
         }
       }
     }
@@ -314,12 +259,18 @@
       });
     });
 
-    /* botones magnéticos */
+    /* botones magnéticos: el desplazamiento va con el tamaño del botón,
+       así que además del factor hace falta un tope. Sin él, un botón
+       ancho se despegaba varios centímetros del cursor.
+       Movimiento corto a propósito: se nota que el botón responde,
+       pero no se despega del sitio ni tapa el texto de al lado. */
+    const clamp = (v, m) => Math.max(-m, Math.min(m, v));
     $$('.btn--lg, .chat-launcher').forEach(el => {
+      const MAX = 2.5;
       el.addEventListener('pointermove', e => {
         const r = el.getBoundingClientRect();
-        const dx = (e.clientX - r.left - r.width / 2) * .22;
-        const dy = (e.clientY - r.top - r.height / 2) * .28;
+        const dx = clamp((e.clientX - r.left - r.width / 2) * .035, MAX);
+        const dy = clamp((e.clientY - r.top - r.height / 2) * .07, MAX);
         el.style.translate = dx + 'px ' + dy + 'px';
       });
       el.addEventListener('pointerleave', () => { el.style.translate = ''; });
